@@ -18,13 +18,7 @@
                     </thead>
                     <tbody>
                         <tr th:each="destino : ${search}">
-                            <td>
-                                <img th:src="${destino.imageUrl}" alt="" width="300px">
-                                <p th:text="${destino.name}"></p>
-                                <p th:text="${destino.descripcion}"></p>
-                                <button type="button" class="btn btn-success">Compartir por correo</button>
-                                <button type="button" class="btn btn-info">Descargar PDF</button>
-                            </td>
+                            <td th:replace="components/destino :: copy"></td>
                         </tr>
                     </tbody>
                 </table>

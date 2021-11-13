@@ -17,8 +17,4 @@ public class HomeController {
 		return "busqueda";
 	}
 
-    @GetMapping("/reportes")
-	public String reportes(Model model) {
-		return "reportes";
-	}
 }
