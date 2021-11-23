@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import pe.gob.mincetur.webdestinosturisticos.Beans.Destino;
+import pe.gob.mincetur.webdestinosturisticos.Beans.DestinoDetalle;
 import pe.gob.mincetur.webdestinosturisticos.Beans.DestinoFoto;
 import pe.gob.mincetur.webdestinosturisticos.Beans.Detalle;
 import pe.gob.mincetur.webdestinosturisticos.Utils.ConectaDB;
@@ -71,7 +72,8 @@ public class DestinoDetalleServlet extends HttpServlet {
             
             sta = ConectaDB.getConexion().
                     prepareStatement("SELECT df.codDestinoFoto, df.ruta_imagen "
-                            + "FROM destino d inner join destinofoto df on df.codDestino = d.codDestino "
+                            + "FROM destino d "
+                            + "inner join destinofoto df on df.codDestino = d.codDestino "
                             + "where d.codDestino = ?;");
             sta.setInt(1, codDestino);
             rs = sta.executeQuery();
@@ -81,6 +83,22 @@ public class DestinoDetalleServlet extends HttpServlet {
                 imagenes.add(df);
             }
             d.setImagenes(imagenes);
+            
+            sta = ConectaDB.getConexion().
+                    prepareStatement("SELECT dd.codDestinoDetalle, dd.nombre, dd.descripcion "
+                            + "FROM destino d "
+                            + "inner join destinodetalle dd on dd.codDestino = d.codDestino "
+                            + "where d.codDestino = ?;");
+            sta.setInt(1, codDestino);
+            rs = sta.executeQuery();
+            List<DestinoDetalle> servicios = new ArrayList<>();
+            while (rs.next()) {
+                DestinoDetalle dd = new DestinoDetalle(rs.getInt(1), rs.getString(2), 
+                rs.getString(3));
+                servicios.add(dd);
+            }
+            d.setServicios(servicios);
+            
             
             request.setAttribute("detalle", d);
             System.out.println(d.getNombre());

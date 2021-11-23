@@ -1,3 +1,4 @@
+<%@page import="pe.gob.mincetur.webdestinosturisticos.Beans.DestinoDetalle"%>
 <%@page import="java.util.List"%>
 <%@page import="pe.gob.mincetur.webdestinosturisticos.Beans.DestinoFoto"%>
 <%@page import="pe.gob.mincetur.webdestinosturisticos.Beans.Detalle"%>
@@ -49,57 +50,78 @@
                 </ul>
             </div>
         </nav>
-        <div class="container my-2">
+        <div class="container" style="margin-top: 30px">
+            <%
+                if (request.getAttribute("detalle") != null) {
+                    Detalle d = (Detalle) request.getAttribute("detalle");
+            %>
             <div class="row">
+                <div class="col-md">
+                    <div id="demo" class="carousel slide" data-ride="carousel">
 
-                <%
-                    if (request.getAttribute("detalle") != null) {
-                        Detalle d = (Detalle) request.getAttribute("detalle");
-                %>
-                <div id="demo" class="carousel slide" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ul class="carousel-indicators">
+                            <%
+                                List<DestinoFoto> imagenes = d.getImagenes();
+                                for (int i = 0; i < imagenes.size(); i++) {
+                            %>
+                            <li data-target="#demo" data-slide-to="<%=i%>" <%if (i == 0) {%>class="active"<%}%>></li>
+                                <%
+                                    }
+                                %>
+                        </ul>
 
-                    <!-- Indicators -->
-                    <ul class="carousel-indicators">
-                        <%
-                            List<DestinoFoto> imagenes = d.getImagenes();
-                            for (int i = 0; i < imagenes.size(); i++) {
-                        %>
-                        <li data-target="#demo" data-slide-to="<%=i%>" <%if (i == 0) {%>class="active"<%}%>></li>
+                        <!-- The slideshow -->
+                        <div class="carousel-inner">
+                            <%
+                                for (int i = 0; i < imagenes.size(); i++) {
+                            %>
+                            <div class="carousel-item <%if (i == 0) {%>active<%}%>">
+                                <img src="<%=imagenes.get(i).getRutaImagen()%>" alt="<%=d.getNombre()%>">
+                            </div>
                             <%
                                 }
                             %>
-                    </ul>
+                        </div>
 
-                    <!-- The slideshow -->
-                    <div class="carousel-inner">
+                        <!-- Left and right controls -->
+                        <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </a>
+                        <a class="carousel-control-next" href="#demo" data-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </a>
+
+                    </div>
+
+                </div>
+                <div class="col-md">
+                    <div>
+                        <h5 class="card-title"><%=d.getNombre()%></h5>
+                        <p class="card-text"><%=d.getDescripcion()%></p>
+                        <button type="button" class="btn btn-success">Compartir por correo</button>
+                        <button type="button" class="btn btn-info">Descargar PDF</button>
+                    </div>
+                    <div>
+                        <hr>
+                        <h6 class="card-title">Servicios</h6>
                         <%
-                            for (int i = 0; i < imagenes.size(); i++) {
+                            List<DestinoDetalle> servicios = d.getServicios();
+                            for (int i = 0; i < servicios.size(); i++) {
                         %>
-                        <div class="carousel-item <%if (i == 0) {%>active<%}%>">
-                            <img src="<%=imagenes.get(i).getRutaImagen()%>" alt="<%=d.getNombre()%>">
+                        <div>
+                            <h6><%=servicios.get(i).getNombre()%></h6>
+                            <p><%=servicios.get(i).getDescripcion()%></p>
                         </div>
                         <%
                             }
                         %>
                     </div>
-
-                    <!-- Left and right controls -->
-                    <a class="carousel-control-prev" href="#demo" data-slide="prev">
-                        <span class="carousel-control-prev-icon"></span>
-                    </a>
-                    <a class="carousel-control-next" href="#demo" data-slide="next">
-                        <span class="carousel-control-next-icon"></span>
-                    </a>
-
                 </div>
-                <div>
-                    <h5 class="card-title"><%=d.getNombre()%></h5>
-                    <p class="card-text"><%=d.getDescripcion()%></p>
-                </div>
-                <%
-                    }
-                %>
             </div>
+            <%
+                }
+            %>
         </div>
         <footer class="text-center text-lg-start bg-light text-muted">
             <!-- Section: Social media -->

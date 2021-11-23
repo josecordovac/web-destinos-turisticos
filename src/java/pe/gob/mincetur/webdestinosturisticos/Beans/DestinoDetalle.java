@@ -14,6 +14,14 @@ public class DestinoDetalle {
         this.descripcion = descripcion;
     }
 
+    public DestinoDetalle(int codigo, String nombre, String descripcion) {
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+    }
+    
+    
+
     public int getCodigo() {
         return codigo;
     }
