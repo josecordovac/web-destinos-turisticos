@@ -1,3 +1,6 @@
+<%@page import="java.util.List"%>
+<%@page import="pe.gob.mincetur.webdestinosturisticos.Beans.DestinoFoto"%>
+<%@page import="pe.gob.mincetur.webdestinosturisticos.Beans.Detalle"%>
 <%@ page import="pe.gob.mincetur.webdestinosturisticos.Beans.Destino" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
@@ -50,15 +53,16 @@
             <div class="row">
 
                 <%
-                    if (request.getAttribute("destino") != null) {
-                        Destino d = (Destino) request.getAttribute("destino");
+                    if (request.getAttribute("detalle") != null) {
+                        Detalle d = (Detalle) request.getAttribute("detalle");
                 %>
                 <div id="demo" class="carousel slide" data-ride="carousel">
 
                     <!-- Indicators -->
                     <ul class="carousel-indicators">
                         <%
-                            for (int i = 0; i < 3; i++) {
+                            List<DestinoFoto> imagenes = d.getImagenes();
+                            for (int i = 0; i < imagenes.size(); i++) {
                         %>
                         <li data-target="#demo" data-slide-to="<%=i%>" <%if (i == 0) {%>class="active"<%}%>></li>
                             <%
@@ -69,10 +73,10 @@
                     <!-- The slideshow -->
                     <div class="carousel-inner">
                         <%
-                            for (int i = 0; i < 3; i++) {
+                            for (int i = 0; i < imagenes.size(); i++) {
                         %>
                         <div class="carousel-item <%if (i == 0) {%>active<%}%>">
-                            <img src="<%=d.getImagen()%>" alt="<%=d.getNombre()%>">
+                            <img src="<%=imagenes.get(i).getRutaImagen()%>" alt="<%=d.getNombre()%>">
                         </div>
                         <%
                             }
