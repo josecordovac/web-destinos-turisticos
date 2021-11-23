@@ -16,6 +16,15 @@ public class Destino {
         this.descripcion = descripcion;
     }
 
+    public Destino(int codigo, String departamento, String nombre, String descripcion) {
+        this.codigo = codigo;
+        this.departamento = departamento;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+    }
+    
+    
+
     public int getCodigo() {
         return codigo;
     }
