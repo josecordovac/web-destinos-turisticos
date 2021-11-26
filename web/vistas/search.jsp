@@ -8,6 +8,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
         <link rel="stylesheet" href="static/style.css">
         <link rel="icon" href="static/images/favicon-portal.ico">
@@ -32,23 +35,28 @@
                     <li class="nav-item active">
                         <a class="nav-link" href="${pageContext.request.contextPath}/search">B&uacute;squeda <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/hello">Hello</a>
-                    </li>
                 </ul>
             </div>
         </nav>
         <div class="container my-2">
             <form action="${pageContext.request.contextPath}/search" method="post">
-                <p>
-                    Buscar por
-                    <select name="selectTipo">
-                        <option value="nombre">Nombre</option>
-                        <option value="departamento">Departamento</option>
-                    </select>
-                </p>
-                <input type="text" name="name" id="name" placeholder="Palabra clave" />
-                <input type="submit" value="Buscar"/>
+                <div class="row">
+                    <div class="col-sm-3 col-md-3 col-xl-2 col-xs-6 row align-items-center">
+                        <div class="col-md-12">Buscar por</div>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-xl-2 col-xs-6">
+                        <select name="selectTipo" class="form-control">
+                            <option value="nombre">Nombre</option>
+                            <option value="departamento">Departamento</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-xl-2 col-xs-6">
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Palabra clave" />
+                    </div>
+                    <div class="col-sm-3 col-md-3 col-xl-2 col-xs-6">
+                        <input type="submit" value="Buscar" class="btn btn-success"/>
+                    </div>
+                </div>
             </form>
             <hr>
             <%
@@ -138,16 +146,16 @@
                                 Destinos
                             </h6>
                             <p>
-                                <a href="#!" class="text-reset">Macchupicchu</a>
+                                <a href="destinodetalle?id=1" class="text-reset">Macchupicchu</a>
                             </p>
                             <p>
-                                <a href="#!" class="text-reset">Mancora</a>
+                                <a href="destinodetalle?id=5" class="text-reset">Mancora</a>
                             </p>
                             <p>
-                                <a href="#!" class="text-reset">Huascar&aacute;n</a>
+                                <a href="destinodetalle?id=3" class="text-reset">Huascar&aacute;n</a>
                             </p>
                             <p>
-                                <a href="#!" class="text-reset">Lago Titicaca</a>
+                                <a href="destinodetalle?id=4" class="text-reset">Lago Titicaca</a>
                             </p>
                         </div>
                         <!-- Grid column -->
@@ -159,16 +167,16 @@
                                 Departamentos
                             </h6>
                             <p>
-                                <a href="#!" class="text-reset">Cusco</a>
+                                <a href="departamento?id=1" class="text-reset">Cusco</a>
                             </p>
                             <p>
-                                <a href="#!" class="text-reset">Piura</a>
+                                <a href="departamento?id=6" class="text-reset">Piura</a>
                             </p>
                             <p>
-                                <a href="#!" class="text-reset">Huaraz</a>
+                                <a href="departamento?id=3" class="text-reset">Huaraz</a>
                             </p>
                             <p>
-                                <a href="#!" class="text-reset">Puno</a>
+                                <a href="departamento?id=2" class="text-reset">Puno</a>
                             </p>
                         </div>
                         <!-- Grid column -->

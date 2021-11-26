@@ -1,3 +1,7 @@
+<%@page import="pe.gob.mincetur.webdestinosturisticos.Beans.DestinoDetalle"%>
+<%@page import="java.util.List"%>
+<%@page import="pe.gob.mincetur.webdestinosturisticos.Beans.DestinoFoto"%>
+<%@page import="pe.gob.mincetur.webdestinosturisticos.Beans.Detalle"%>
 <%@ page import="pe.gob.mincetur.webdestinosturisticos.Beans.Destino" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
@@ -7,10 +11,13 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+        <link rel="stylesheet" href="static/style.css">
+        <link rel="icon" href="static/images/favicon-portal.ico">
         <style>
             /* Make the image fully responsive */
             .carousel-inner img {
@@ -40,62 +47,81 @@
                     <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/search">B&uacute;squeda</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/hello">Hello</a>
-                    </li>
                 </ul>
             </div>
         </nav>
-        <div class="container my-2">
+        <div class="container" style="margin-top: 30px">
+            <%
+                if (request.getAttribute("detalle") != null) {
+                    Detalle d = (Detalle) request.getAttribute("detalle");
+            %>
             <div class="row">
+                <div class="col-md">
+                    <div id="demo" class="carousel slide" data-ride="carousel">
 
-                <%
-                    if (request.getAttribute("destino") != null) {
-                        Destino d = (Destino) request.getAttribute("destino");
-                %>
-                <div id="demo" class="carousel slide" data-ride="carousel">
+                        <!-- Indicators -->
+                        <ul class="carousel-indicators">
+                            <%
+                                List<DestinoFoto> imagenes = d.getImagenes();
+                                for (int i = 0; i < imagenes.size(); i++) {
+                            %>
+                            <li data-target="#demo" data-slide-to="<%=i%>" <%if (i == 0) {%>class="active"<%}%>></li>
+                                <%
+                                    }
+                                %>
+                        </ul>
 
-                    <!-- Indicators -->
-                    <ul class="carousel-indicators">
-                        <%
-                            for (int i = 0; i < 3; i++) {
-                        %>
-                        <li data-target="#demo" data-slide-to="<%=i%>" <%if (i == 0) {%>class="active"<%}%>></li>
+                        <!-- The slideshow -->
+                        <div class="carousel-inner">
+                            <%
+                                for (int i = 0; i < imagenes.size(); i++) {
+                            %>
+                            <div class="carousel-item <%if (i == 0) {%>active<%}%>">
+                                <img src="<%=imagenes.get(i).getRutaImagen()%>" alt="<%=d.getNombre()%>">
+                            </div>
                             <%
                                 }
                             %>
-                    </ul>
+                        </div>
 
-                    <!-- The slideshow -->
-                    <div class="carousel-inner">
+                        <!-- Left and right controls -->
+                        <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </a>
+                        <a class="carousel-control-next" href="#demo" data-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </a>
+
+                    </div>
+
+                </div>
+                <div class="col-md">
+                    <div>
+                        <h5 class="card-title"><%=d.getNombre()%></h5>
+                        <p class="card-text"><%=d.getDescripcion()%></p>
+                        <button type="button" class="btn btn-success">Compartir por correo</button>
+                        <button type="button" class="btn btn-info">Descargar PDF</button>
+                    </div>
+                    <div>
+                        <hr>
+                        <h6 class="card-title">Servicios</h6>
                         <%
-                            for (int i = 0; i < 3; i++) {
+                            List<DestinoDetalle> servicios = d.getServicios();
+                            for (int i = 0; i < servicios.size(); i++) {
                         %>
-                        <div class="carousel-item <%if (i == 0) {%>active<%}%>">
-                            <img src="<%=d.getImagen()%>" alt="<%=d.getNombre()%>">
+                        <div>
+                            <h6><%=servicios.get(i).getNombre()%></h6>
+                            <p><%=servicios.get(i).getDescripcion()%></p>
                         </div>
                         <%
                             }
                         %>
                     </div>
-
-                    <!-- Left and right controls -->
-                    <a class="carousel-control-prev" href="#demo" data-slide="prev">
-                        <span class="carousel-control-prev-icon"></span>
-                    </a>
-                    <a class="carousel-control-next" href="#demo" data-slide="next">
-                        <span class="carousel-control-next-icon"></span>
-                    </a>
-
                 </div>
-                <div>
-                    <h5 class="card-title"><%=d.getNombre()%></h5>
-                    <p class="card-text"><%=d.getDescripcion()%></p>
-                </div>
-                <%
-                    }
-                %>
             </div>
+            <%
+                }
+            %>
         </div>
         <footer class="text-center text-lg-start bg-light text-muted">
             <!-- Section: Social media -->
@@ -156,16 +182,16 @@
                                 Destinos
                             </h6>
                             <p>
-                                <a href="#!" class="text-reset">Macchupicchu</a>
+                                <a href="destinodetalle?id=1" class="text-reset">Macchupicchu</a>
                             </p>
                             <p>
-                                <a href="#!" class="text-reset">Mancora</a>
+                                <a href="destinodetalle?id=5" class="text-reset">Mancora</a>
                             </p>
                             <p>
-                                <a href="#!" class="text-reset">Huascar&aacute;n</a>
+                                <a href="destinodetalle?id=3" class="text-reset">Huascar&aacute;n</a>
                             </p>
                             <p>
-                                <a href="#!" class="text-reset">Lago Titicaca</a>
+                                <a href="destinodetalle?id=4" class="text-reset">Lago Titicaca</a>
                             </p>
                         </div>
                         <!-- Grid column -->
@@ -177,16 +203,16 @@
                                 Departamentos
                             </h6>
                             <p>
-                                <a href="#!" class="text-reset">Cusco</a>
+                                <a href="departamento?id=1" class="text-reset">Cusco</a>
                             </p>
                             <p>
-                                <a href="#!" class="text-reset">Piura</a>
+                                <a href="departamento?id=6" class="text-reset">Piura</a>
                             </p>
                             <p>
-                                <a href="#!" class="text-reset">Huaraz</a>
+                                <a href="departamento?id=3" class="text-reset">Huaraz</a>
                             </p>
                             <p>
-                                <a href="#!" class="text-reset">Puno</a>
+                                <a href="departamento?id=2" class="text-reset">Puno</a>
                             </p>
                         </div>
                         <!-- Grid column -->

@@ -8,6 +8,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
         <link rel="stylesheet" href="static/style.css">
         <link rel="icon" href="static/images/favicon-portal.ico">
@@ -32,9 +35,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="${pageContext.request.contextPath}/search">B&uacute;squeda</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/hello">Hello</a>
-                    </li>
                 </ul>
             </div>
         </nav>
@@ -48,7 +48,7 @@
                 %>
                 <div class="col-sm-6 col-md-6 col-xl-4 col-xs-2" style="margin-bottom: 30px;">
                     <div class="card" style="width: 18rem;">
-                        <img src="<%=d.getImagen()%>" class="card-img-top" alt="<%=d.getNombre()%>">
+                        <img src="<%=d.getImagen()%>" class="card-img-top" alt="<%=d.getNombre()%>" width="200" height="200">
                         <div class="card-body">
                             <h5 class="card-title"><%=d.getNombre()%></h5>
                             <p class="card-text"><%=d.getDescripcion()%></p>
@@ -120,16 +120,16 @@
                                 Destinos
                             </h6>
                             <p>
-                                <a href="#!" class="text-reset">Macchupicchu</a>
+                                <a href="destinodetalle?id=1" class="text-reset">Macchupicchu</a>
                             </p>
                             <p>
-                                <a href="#!" class="text-reset">Mancora</a>
+                                <a href="destinodetalle?id=5" class="text-reset">Mancora</a>
                             </p>
                             <p>
-                                <a href="#!" class="text-reset">Huascar&aacute;n</a>
+                                <a href="destinodetalle?id=3" class="text-reset">Huascar&aacute;n</a>
                             </p>
                             <p>
-                                <a href="#!" class="text-reset">Lago Titicaca</a>
+                                <a href="destinodetalle?id=4" class="text-reset">Lago Titicaca</a>
                             </p>
                         </div>
                         <!-- Grid column -->
@@ -141,16 +141,16 @@
                                 Departamentos
                             </h6>
                             <p>
-                                <a href="#!" class="text-reset">Cusco</a>
+                                <a href="departamento?id=1" class="text-reset">Cusco</a>
                             </p>
                             <p>
-                                <a href="#!" class="text-reset">Piura</a>
+                                <a href="departamento?id=6" class="text-reset">Piura</a>
                             </p>
                             <p>
-                                <a href="#!" class="text-reset">Huaraz</a>
+                                <a href="departamento?id=3" class="text-reset">Huaraz</a>
                             </p>
                             <p>
-                                <a href="#!" class="text-reset">Puno</a>
+                                <a href="departamento?id=2" class="text-reset">Puno</a>
                             </p>
                         </div>
                         <!-- Grid column -->

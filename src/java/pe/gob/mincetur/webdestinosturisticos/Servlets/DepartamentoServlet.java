@@ -6,6 +6,7 @@
 package pe.gob.mincetur.webdestinosturisticos.Servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -16,17 +17,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import pe.gob.mincetur.webdestinosturisticos.Beans.Destino;
-import pe.gob.mincetur.webdestinosturisticos.Beans.DestinoDetalle;
-import pe.gob.mincetur.webdestinosturisticos.Beans.DestinoFoto;
-import pe.gob.mincetur.webdestinosturisticos.Beans.Detalle;
 import pe.gob.mincetur.webdestinosturisticos.Utils.ConectaDB;
+import pe.gob.mincetur.webdestinosturisticos.Utils.Datos;
 
 /**
  *
  * @author User
  */
-@WebServlet(name = "DestinoDetalleServlet", urlPatterns = {"/destinodetalle"})
-public class DestinoDetalleServlet extends HttpServlet {
+@WebServlet(name = "DepartamentoServlet", urlPatterns = {"/departamento"})
+public class DepartamentoServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -54,55 +53,23 @@ public class DestinoDetalleServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //processRequest(request, response);
-        int codDestino = Integer.parseInt(request.getParameter("id"));
+        processRequest(request, response);
+        int id = Integer.parseInt(request.getParameter("id"));
+        String nombre = "Cuzco";
+        
         try {
             PreparedStatement sta = ConectaDB.getConexion().
-                    prepareStatement("SELECT d.codDestino, de.nombre, d.nombre, d.descripcion "
-                            + "FROM destino d "
-                            + "inner join departamento de on de.codDepartamento = d.codDepartamento "
-                            + "where d.codDestino = ?;");
-            sta.setInt(1, codDestino);
+                    prepareStatement("select de.nombre "
+                            + "from departamento de "
+                            + "where de.codDepartamento = ?");
+            sta.setInt(1, id);
             ResultSet rs = sta.executeQuery();
-            Detalle d = null;
             while (rs.next()) {
-                d = new Detalle(rs.getInt(1), rs.getString(2),
-                        rs.getString(3), rs.getString(4));
+                nombre = rs.getString(1);
             }
-            
-            sta = ConectaDB.getConexion().
-                    prepareStatement("SELECT df.codDestinoFoto, df.ruta_imagen "
-                            + "FROM destino d "
-                            + "inner join destinofoto df on df.codDestino = d.codDestino "
-                            + "where d.codDestino = ?;");
-            sta.setInt(1, codDestino);
-            rs = sta.executeQuery();
-            List<DestinoFoto> imagenes = new ArrayList<>();
-            while (rs.next()) {
-                DestinoFoto df = new DestinoFoto(rs.getInt(1), rs.getString(2));
-                imagenes.add(df);
-            }
-            d.setImagenes(imagenes);
-            
-            sta = ConectaDB.getConexion().
-                    prepareStatement("SELECT dd.codDestinoDetalle, dd.nombre, dd.descripcion "
-                            + "FROM destino d "
-                            + "inner join destinodetalle dd on dd.codDestino = d.codDestino "
-                            + "where d.codDestino = ?;");
-            sta.setInt(1, codDestino);
-            rs = sta.executeQuery();
-            List<DestinoDetalle> servicios = new ArrayList<>();
-            while (rs.next()) {
-                DestinoDetalle dd = new DestinoDetalle(rs.getInt(1), rs.getString(2), 
-                rs.getString(3));
-                servicios.add(dd);
-            }
-            d.setServicios(servicios);
-            
-            
-            request.setAttribute("detalle", d);
-            System.out.println(d.getNombre());
-            request.getRequestDispatcher("vistas/detalle.jsp").forward(request, response);
+            List<Destino> lista = Datos.getDestinos("de.nombre", nombre);
+            request.setAttribute("lista", lista);
+            request.getRequestDispatcher("vistas/destino.jsp").forward(request, response);
         } catch (Exception e) {
             System.out.println("Error: " + e);
         }
@@ -120,7 +87,6 @@ public class DestinoDetalleServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
-
     }
 
     /**

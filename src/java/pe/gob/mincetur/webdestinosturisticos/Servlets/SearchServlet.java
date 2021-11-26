@@ -6,16 +6,14 @@
 package pe.gob.mincetur.webdestinosturisticos.Servlets;
 
 import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import pe.gob.mincetur.webdestinosturisticos.Beans.Destino;
-import pe.gob.mincetur.webdestinosturisticos.Utils.ConectaDB;
+import pe.gob.mincetur.webdestinosturisticos.Utils.Datos;
 
 /**
  *
@@ -64,20 +62,7 @@ public class SearchServlet extends HttpServlet {
             criterio = "de.nombre";
         }
         try {
-            PreparedStatement sta = ConectaDB.getConexion().
-                    prepareStatement("select d.codDestino, de.nombre, d.nombre, df.ruta_imagen, d.descripcion "
-                            + "from destino d\n"
-                            + "inner join departamento de on de.codDepartamento = d.codDepartamento\n"
-                            + "inner join destinofoto df on df.codDestino = d.codDestino "
-                            + "where " + criterio + " = ?;");
-            sta.setString(1, name);
-            ResultSet rs = sta.executeQuery();
-            ArrayList<Destino> lista = new ArrayList<>();
-            while (rs.next()) {
-                Destino d = new Destino(rs.getInt(1), rs.getString(2),
-                        rs.getString(3), rs.getString(4), rs.getString(5).substring(0, 93));
-                lista.add(d);
-            }
+            List<Destino> lista = Datos.getDestinos(criterio, name);
             request.setAttribute("lista", lista);
             request.getRequestDispatcher("vistas/search.jsp").forward(request, response);
         } catch (Exception e) {
