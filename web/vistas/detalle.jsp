@@ -16,6 +16,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css">
+        <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
         <link rel="stylesheet" href="static/style.css">
         <link rel="icon" href="static/images/favicon-portal.ico">
         <style>
@@ -104,14 +105,17 @@
                     </div>
                     <div>
                         <hr>
-                        <h6 class="card-title">Servicios</h6>
+                        <h6 class="card-title">Lugares de interés</h6>
                         <%
                             List<DestinoDetalle> servicios = d.getServicios();
                             for (int i = 0; i < servicios.size(); i++) {
                         %>
-                        <div>
-                            <h6><%=servicios.get(i).getNombre()%></h6>
-                            <p><%=servicios.get(i).getDescripcion()%></p>
+                        <div class="row">
+                            <div class="col-sm-1 col-md-1 col-xs-1 col-lg-1"><i class='<%=servicios.get(i).getIcon()%>' ></i></div>
+                            <div class="col-sm-11 col-md-11 col-xs-11 col-lg-11"><a href="<%=servicios.get(i).getDescripcion()%>" target="_blank">
+                                    <%=servicios.get(i).getNombre()%>
+                                </a>
+                            </div>
                         </div>
                         <%
                             }

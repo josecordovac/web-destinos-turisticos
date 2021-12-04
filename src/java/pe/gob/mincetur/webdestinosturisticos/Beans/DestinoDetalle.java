@@ -3,15 +3,17 @@ package pe.gob.mincetur.webdestinosturisticos.Beans;
 public class DestinoDetalle {
 
     private int codigo;
-    private TipoDetalle tipo;
+    private String tipo;
     private String nombre;
     private String descripcion;
+    private String icon;
 
-    public DestinoDetalle(int codigo, TipoDetalle tipo, String nombre, String descripcion) {
+    public DestinoDetalle(int codigo, String tipo, String nombre, String descripcion, String icon) {
         this.codigo = codigo;
         this.tipo = tipo;
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.icon = icon;
     }
 
     public DestinoDetalle(int codigo, String nombre, String descripcion) {
@@ -30,11 +32,11 @@ public class DestinoDetalle {
         this.codigo = codigo;
     }
 
-    public TipoDetalle getTipo() {
+    public String getTipo() {
         return tipo;
     }
 
-    public void setTipo(TipoDetalle tipo) {
+    public void setTipo(String tipo) {
         this.tipo = tipo;
     }
 
@@ -53,7 +55,13 @@ public class DestinoDetalle {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    
-    
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
     
 }

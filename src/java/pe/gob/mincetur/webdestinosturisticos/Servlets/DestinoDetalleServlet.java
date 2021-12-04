@@ -15,7 +15,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import pe.gob.mincetur.webdestinosturisticos.Beans.Destino;
 import pe.gob.mincetur.webdestinosturisticos.Beans.DestinoDetalle;
 import pe.gob.mincetur.webdestinosturisticos.Beans.DestinoFoto;
 import pe.gob.mincetur.webdestinosturisticos.Beans.Detalle;
@@ -85,16 +84,18 @@ public class DestinoDetalleServlet extends HttpServlet {
             d.setImagenes(imagenes);
             
             sta = ConectaDB.getConexion().
-                    prepareStatement("SELECT dd.codDestinoDetalle, dd.nombre, dd.descripcion "
+                    prepareStatement("SELECT dd.codDestinoDetalle, td.nombre, "
+                            + "dd.nombre, dd.descripcion, td.icon "
                             + "FROM destino d "
                             + "inner join destinodetalle dd on dd.codDestino = d.codDestino "
+                            + "inner join tipodetalle td on td.codTipoDetalle = dd.codTipoDetalle "
                             + "where d.codDestino = ?;");
             sta.setInt(1, codDestino);
             rs = sta.executeQuery();
             List<DestinoDetalle> servicios = new ArrayList<>();
             while (rs.next()) {
                 DestinoDetalle dd = new DestinoDetalle(rs.getInt(1), rs.getString(2), 
-                rs.getString(3));
+                rs.getString(3), rs.getString(4), rs.getString(5));
                 servicios.add(dd);
             }
             d.setServicios(servicios);
